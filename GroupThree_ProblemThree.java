@@ -56,6 +56,8 @@ public class GroupThree_ProblemThree {
     public static class PayrollSystem {
         LinkedList<Employee> employees = new LinkedList<>();
         private Scanner input = new Scanner(System.in);
+        private int employeeCounter = 0; 
+      
         public static final String RESET = "\u001B[0m";
         public static final String CYAN = "\u001B[36m";
         public static final String GREEN = "\u001B[32m";
@@ -69,7 +71,7 @@ public class GroupThree_ProblemThree {
 
             for (int i = 0; i < numberOfEmployees; i++) {
                 System.out.println("================================");
-                System.out.println("Entering details for employee " + (i + 1) + ":");
+                System.out.println("Entering details for employee " + (employeeCounter + 1) + ":");
 
                 System.out.print("Employee Name: ");
                 String name = input.nextLine();
@@ -105,6 +107,7 @@ public class GroupThree_ProblemThree {
 
                 Employee employee = new Employee(name, id, department, rank, hours, minutes, seconds, absencesCount, tardiness, undertime);
                 employees.add(employee);
+                employeeCounter++; 
             }
             
             System.out.println("================================");
