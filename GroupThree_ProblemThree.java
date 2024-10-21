@@ -35,6 +35,26 @@ public class GroupThree_ProblemThree {
       this.tardinessDeduction = tardinessDeduction;
       this.undertimeDeduction = undertimeDeduction;
     }
+  }
+
+  public class PayrollSystem{
+    LinkedList<Employee> employees = new LinkedList<>();
+
+    public void createEmployee(){
+      // Source code for creation of employee here
+    }
+
+    public void findEmployee(){
+      // Source code for finding of employee here
+    }
+
+    public void updateEmployee(){
+      // Source code for updating of employee here
+    }
+
+    public void deleteEmployee(){
+      // Source code for deleting of employee here
+    }
 
     public static double convertTimeToHour(int hours, int minutes, int seconds){
       double HOUR_CONSTANT_FOR_MINUTES = 60;
