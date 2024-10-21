@@ -1,5 +1,4 @@
-public class GroupThree_ProblemThree{
-  import java.util.*;
+import java.util.*;
 
 public class GroupThree_ProblemThree {
   public static class Employee{
@@ -54,6 +53,4 @@ public class GroupThree_ProblemThree {
     Employee person1 = new Employee("Omar", 1, "ICS", "CEO", 69, 68, 67, 2, 1.2, 1.5);
     person1.print();
   }
-}
-
 }
