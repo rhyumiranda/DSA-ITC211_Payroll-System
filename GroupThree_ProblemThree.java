@@ -36,6 +36,8 @@ public class GroupThree_ProblemThree {
             this.undertimeDeduction = undertimeDeduction;
         }
 
+// Using existing attributes to use as the scanner for creating an employee
+
         @Override
         public String toString() {
             return String.format("Employee Details:\n" +
@@ -66,40 +68,18 @@ public class GroupThree_ProblemThree {
             for (int i = 0; i < numberOfEmployees; i++) {
                 System.out.println("Entering details for employee " + (i + 1) + ":");
 
-                System.out.print("Employee Name: ");
-                String name = scanner.nextLine();
-
-                System.out.print("Employee ID: ");
-                double id = scanner.nextDouble();
-                scanner.nextLine(); 
-
-                System.out.print("Department: ");
-                String department = scanner.nextLine();
-
-                System.out.print("Rank: ");
-                String rank = scanner.nextLine();
-
-                System.out.print("Hours: ");
-                double hours = scanner.nextDouble();
-
-                System.out.print("Minutes: ");
-                double minutes = scanner.nextDouble();
-
-                System.out.print("Seconds: ");
-                double seconds = scanner.nextDouble();
-
-                System.out.print("Absence Count Deduction: ");
-                int absencesCount = scanner.nextInt();
-
-                System.out.print("Tardiness Deduction: ");
-                double tardiness = scanner.nextDouble();
-
-                System.out.print("Undertime Deduction: ");
-                double undertime = scanner.nextDouble();
-                scanner.nextLine(); 
-
-                Employee employee = new Employee(name, id, department, rank, hours, minutes, seconds, absencesCount, tardiness, undertime);
-                employees.add(employee);
+                employees.add(new Employee(
+                    getInput(scanner, "Employee Name: "),
+                    getDoubleInput(scanner, "Employee ID: "),
+                    getInput(scanner, "Department: "),
+                    getInput(scanner, "Rank: "),
+                    getDoubleInput(scanner, "Hours: "),
+                    getDoubleInput(scanner, "Minutes: "),
+                    getDoubleInput(scanner, "Seconds: "),
+                    getIntInput(scanner, "Absence Count Deduction: "),
+                    getDoubleInput(scanner, "Tardiness Deduction: "),
+                    getDoubleInput(scanner, "Undertime Deduction: ")
+                ));
             }
 
             System.out.println("\nEmployees Created:");
@@ -107,6 +87,23 @@ public class GroupThree_ProblemThree {
                 System.out.println(emp);
             }
         }
+
+        private String getInput(Scanner scanner, String prompt) {
+            System.out.print(prompt);
+            return scanner.nextLine();
+        }
+
+        private double getDoubleInput(Scanner scanner, String prompt) {
+            System.out.print(prompt);
+            return scanner.nextDouble();
+        }
+
+        private int getIntInput(Scanner scanner, String prompt) {
+            System.out.print(prompt);
+            return scanner.nextInt();
+        }
+        
+        // Using existing attributes to use as the scanner for creating an employee
 
         public void findEmployee() {
             // Source code for finding an employee will go here
