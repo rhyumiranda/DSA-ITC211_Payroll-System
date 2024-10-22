@@ -1,3 +1,4 @@
+
 import java.util.*;
 
 public class GroupThree_ProblemThree {
@@ -40,55 +41,112 @@ public class GroupThree_ProblemThree {
       this.tardinessDeduction = tardinessDeduction;
       this.undertimeDeduction = undertimeDeduction;
     }
-  }
+  
+  
+  // Format to display the employee
+    @Override
+    public String toString() {
+        return String.format("Employee Details:\n" +
+                        "  Name: %s\n" +
+                        "  Employee ID No. : %.0f\n" + // Added Employee ID on Display so it shouldn't be confusing when counting how many employees
+                        "  Department: %s\n" +
+                        "  Rank: %s\n" +
+                        "  Time: %.2fh\n" +  
+                        "  Tardiness Deduction Time: %s\n" +
+                        "  Undertime Deduction Time: %s\n" +
+                        "  Absences: %d\n",
+                employeeName, employeeID, employeeDepartment, employeeRank,
+                monthlyHoursToRender, 
+                tardinessDeductionTime, 
+                undertimeDeductionTime,
+                absencesCountDeduction);
+    
+        }
+    }
 
   public static class PayrollSystem{
-    LinkedList<Employee> employees = new LinkedList<>();
-    private Scanner input = new Scanner(System.in);
+        LinkedList<Employee> employees = new LinkedList<>();
+        private Scanner input = new Scanner(System.in);
+        private int EmployeeCount = 1; 
 
-    public void createEmployee(){
-      System.out.print("Enter number of employees to create: ");
-      int numberOfEmployees = input.nextInt();
-      input.nextLine();
+        public void createEmployee() {
+            System.out.print("Enter number of employees to create: ");
+            int numberOfEmployees = input.nextInt();
+            input.nextLine(); 
 
-      for (int i = 0; i < numberOfEmployees; i++) {
-        System.out.println("---------- Employee " + (i + 1) + " ----------");
-        System.out.print("Employee Name (Ln, Fn Mi): ");
-        String employeeName = input.nextLine();
-        System.out.print("Employee Department: ");
-        String employeeDepartment = input.nextLine();
-        System.out.print("Employee Rank:");
-        String employeeRank = input.nextLine();
-        System.out.print("Hours to render in a month:");
-        double monthlyHoursToRender = input.nextDouble();
-        System.out.print("Hourly rate:");
-        double hourlyRate = input.nextDouble();
-        input.nextLine();
-        System.out.print("Please enter the tardiness or late duration in the format (HH:MM:SS)");
-        String tardinessDeductionTime = input.nextLine();
-        System.out.print("Please enter undertime duration in the format (HH:MM:SS)");
-        String undertimeDeductionTime = input.nextLine();
-        System.out.print("Please enter absences count: ");
-        double absencesCountDeduction = input.nextDouble();
-        System.out.print("========== ========== ==========");
-      }
-    }
+            for (int i = 0; i < numberOfEmployees; i++) {
+                System.out.println("---------- Employee " + EmployeeCount + " ----------");
+                System.out.print("Employee Name (Ln, Fn Mi): ");
+                String employeeName = input.nextLine();
+                System.out.print("Employee Department: ");
+                String employeeDepartment = input.nextLine();
+                System.out.print("Employee Rank: ");
+                String employeeRank = input.nextLine();
+                System.out.print("Hours to render in a month: ");
+                double monthlyHoursToRender = input.nextDouble();
+                System.out.print("Hourly rate: ");
+                double hourlyRate = input.nextDouble();
+                input.nextLine(); 
 
-    public void findEmployee(){
-      // Source code for finding of employee here
-    }
+                System.out.println("Please enter the tardiness or late duration in the format");
+                System.out.print("(HH:MM:SS): ");
+                String tardinessDeductionTime = input.nextLine();
+                
+                System.out.println("Please enter undertime duration in the format");
+                System.out.print("(HH:MM:SS): ");
+                String undertimeDeductionTime = input.nextLine();
+                
+                System.out.print("Please enter absences count: ");
+                int absencesCountDeduction = input.nextInt();
+                input.nextLine(); 
 
-    public void updateEmployee(){
-      // Source code for updating of employee here
-    }
+            Employee employee = new Employee(
+                    employeeName,
+                    EmployeeCount++, 
+                    employeeDepartment,
+                    employeeRank,
+                    monthlyHoursToRender,
+                    hourlyRate,
+                    tardinessDeductionTime,
+                    undertimeDeductionTime,
+                    absencesCountDeduction,
+                    0.0, // Placeholder for tardinessDeduction
+                    0.0  // Placeholder for undertimeDeduction
+            );
 
-    public void deleteEmployee(){
-      // Source code for deleting of employee here
-    }
+                employees.add(employee);
+                System.out.println("Employee " + employeeName + " has been added.");
+                System.out.println("========== ========== ==========");
+            }
+        }
 
-    public void displayEmployee(){
+        public void displayEmployee() {
+            if (employees.isEmpty()) {
+                System.out.println("o===o===o===o===o===o===o===o===o===o");
+                System.out.println("      No employees to display.");
+                System.out.println("o===o===o===o===o===o===o===o===o===o");
+                return;
+            }
+            System.out.println("o===o===o===o===o===o===o===o===o===o");
+            System.out.println("          List of Employees:");
+            System.out.println("o===o===o===o===o===o===o===o===o===o");
+            for (Employee emp : employees) {
+                System.out.println(emp);
+            }
+            System.out.println("o===o===o===o===o===o===o===o===o===o");
+        }
 
-    }
+        public void findEmployee() {
+            // Source code for finding an employee here
+        }
+
+        public void updateEmployee() {
+            // Source code for updating an employee here
+        }
+
+        public void deleteEmployee() {
+            // Source code for deleting an employee here
+        }
 
     public void displayMenu(){
 
