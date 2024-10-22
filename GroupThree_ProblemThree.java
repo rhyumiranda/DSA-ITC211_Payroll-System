@@ -6,9 +6,12 @@ public class GroupThree_ProblemThree {
     private double employeeID;
     private String employeeDepartment;
     private String employeeRank;
-    private double hours;
-    private double minutes;
-    private double seconds;
+
+    private double monthlyHoursToRender;
+    private double hourlyRate;
+    private String tardinessDeductionTime;
+    private String undertimeDeductionTime;
+
     private int absencesCountDeduction;
     private double tardinessDeduction;
     private double undertimeDeduction;
@@ -18,9 +21,10 @@ public class GroupThree_ProblemThree {
             int employeeID,
             String employeeDepartment,
             String employeeRank,
-            int hours,
-            int minutes,
-            int seconds,
+            double monthlyHoursToRender,
+            double hourlyRate,
+            String tardinessDeductionTime,
+            String undertimeDeductionTime,
             int absencesCountDeduction,
             double tardinessDeduction,
             double undertimeDeduction){
@@ -28,9 +32,10 @@ public class GroupThree_ProblemThree {
       this.employeeID = employeeID;
       this.employeeDepartment = employeeDepartment;
       this.employeeRank = employeeRank;
-      this.hours = hours;
-      this.minutes = minutes;
-      this.seconds = seconds;
+      this.monthlyHoursToRender = monthlyHoursToRender;
+      this.hourlyRate = hourlyRate;
+      this.tardinessDeductionTime = tardinessDeductionTime;
+      this.undertimeDeductionTime = undertimeDeductionTime;
       this.absencesCountDeduction = absencesCountDeduction;
       this.tardinessDeduction = tardinessDeduction;
       this.undertimeDeduction = undertimeDeduction;
@@ -40,15 +45,33 @@ public class GroupThree_ProblemThree {
   public static class PayrollSystem{
     LinkedList<Employee> employees = new LinkedList<>();
     private Scanner input = new Scanner(System.in);
-    public static final String RESET = "\u001B[0m";
-    public static final String CYAN = "\u001B[36m";
-    public static final String GREEN = "\u001B[32m";
-    public static final String YELLOW = "\u001B[33m";
-    public static final String RED = "\u001B[31m";
-
 
     public void createEmployee(){
-      // Source code for creation of employee here
+      System.out.print("Enter number of employees to create: ");
+      int numberOfEmployees = input.nextInt();
+      input.nextLine();
+
+      for (int i = 0; i < numberOfEmployees; i++) {
+        System.out.println("---------- Employee " + (i + 1) + " ----------");
+        System.out.print("Employee Name (Ln, Fn Mi): ");
+        String employeeName = input.nextLine();
+        System.out.print("Employee Department: ");
+        String employeeDepartment = input.nextLine();
+        System.out.print("Employee Rank:");
+        String employeeRank = input.nextLine();
+        System.out.print("Hours to render in a month:");
+        double monthlyHoursToRender = input.nextDouble();
+        System.out.print("Hourly rate:");
+        double hourlyRate = input.nextDouble();
+        input.nextLine();
+        System.out.print("Please enter the tardiness or late duration in the format (HH:MM:SS)");
+        String tardinessDeductionTime = input.nextLine();
+        System.out.print("Please enter undertime duration in the format (HH:MM:SS)");
+        String undertimeDeductionTime = input.nextLine();
+        System.out.print("Please enter absences count: ");
+        double absencesCountDeduction = input.nextDouble();
+        System.out.print("========== ========== ==========");
+      }
     }
 
     public void findEmployee(){
