@@ -119,19 +119,8 @@ public class GroupThree_ProblemThree {
         int absencesCount = input.nextInt();
         input.nextLine();
 
-        String[] splitTardinessTime = tardinessTime.split(":");
-        String[] splitUnderTime = undertimeTime.split(":");
-
-        int hourTardiness = Integer.parseInt(splitTardinessTime[0]);
-        int minutesTardiness = Integer.parseInt(splitTardinessTime[1]);
-        int secondsTardiness = Integer.parseInt(splitTardinessTime[2]);
-
-        int hourUnderTime = Integer.parseInt(splitUnderTime[0]);
-        int minuteUnderTime = Integer.parseInt(splitUnderTime[1]);
-        int secondsUnderTime = Integer.parseInt(splitUnderTime[2]);
-
-        double convertedTardinessTime = convertTimeToHour(hourTardiness, minutesTardiness, secondsTardiness);
-        double convertedUnderTimeDeduction = convertTimeToHour(hourUnderTime, minuteUnderTime, secondsUnderTime);
+        double convertedTardinessTime = convertTimeToHour(tardinessTime);
+        double convertedUnderTimeDeduction = convertTimeToHour(undertimeTime);
 
         absencesDeduction = absencesCount * (hourlyRate * 8);
         tardinessDeduction = convertedTardinessTime * hourlyRate;
@@ -208,7 +197,86 @@ public class GroupThree_ProblemThree {
     }
 
     public void updateEmployee() {
-      // Source code for updating an employee here
+      System.out.print("Enter the employee ID to update: ");
+      int idToUpdate = input.nextInt();
+      input.nextLine();  // Consume leftover newline
+
+      Employee employeeToUpdate = employees.stream()
+              .filter(emp -> emp.employeeID == idToUpdate)
+              .findFirst()
+              .orElse(null);
+
+      if (employeeToUpdate != null) {
+        System.out.println("Updating employee with ID " + idToUpdate + ".");
+
+        System.out.print("New Employee Name (Leave blank to keep current: "
+                + employeeToUpdate.employeeName + "): ");
+        String newName = input.nextLine();
+        if (!newName.isBlank()) employeeToUpdate.employeeName = newName;
+
+        System.out.print("New Employee Department (Current: "
+                + employeeToUpdate.employeeDepartment + "): ");
+        String newDepartment = input.nextLine();
+        if (!newDepartment.isBlank()) employeeToUpdate.employeeDepartment = newDepartment;
+
+        System.out.print("New Monthly Hours to Render (Current: "
+                + employeeToUpdate.monthlyHoursToRender + "): ");
+        String hoursInput = input.nextLine();
+        if (!hoursInput.isBlank())
+          employeeToUpdate.monthlyHoursToRender = Double.parseDouble(hoursInput);
+
+        System.out.print("New Hourly Rate (Current: " + employeeToUpdate.hourlyRate + "): ");
+        String rateInput = input.nextLine();
+        if (!rateInput.isBlank())
+          employeeToUpdate.hourlyRate = Double.parseDouble(rateInput);
+
+        System.out.print("New Tardiness Time (Current: "
+                + employeeToUpdate.tardinessTime + "): ");
+        String newTardinessTime = input.nextLine();
+        if (!newTardinessTime.isBlank())
+          employeeToUpdate.tardinessTime = newTardinessTime;
+
+        System.out.print("New Undertime Time (Current: "
+                + employeeToUpdate.undertimeTime + "): ");
+        String newUndertimeTime = input.nextLine();
+        if (!newUndertimeTime.isBlank())
+          employeeToUpdate.undertimeTime = newUndertimeTime;
+
+        System.out.print("New Absences Count (Current: "
+                + employeeToUpdate.absencesCount + "): ");
+        String absencesInput = input.nextLine();
+        if (!absencesInput.isBlank())
+          employeeToUpdate.absencesCount = Integer.parseInt(absencesInput);
+
+        double convertedTardinessTime = convertTimeToHour(newTardinessTime);
+        double convertedUndertimeTime = convertTimeToHour(newUndertimeTime);
+
+        double absencesDeduction = Double.parseDouble(absencesInput) * Double.parseDouble(rateInput);
+        double tardinessDeduction = convertedTardinessTime * Double.parseDouble(rateInput);
+        double undertimeDeduction = convertedUndertimeTime * Double.parseDouble(rateInput);
+
+        System.out.println("Absences Deduction: " + absencesDeduction);
+        employeeToUpdate.absencesCountDeduction = absencesDeduction;
+
+        System.out.println("Tardiness Deduction: " + tardinessDeduction);
+        employeeToUpdate.tardinessDeduction = tardinessDeduction;
+
+        System.out.println("Undertime Deduction: " + undertimeDeduction);
+        employeeToUpdate.undertimeDeduction = undertimeDeduction;
+
+        double grossPay = Double.parseDouble(rateInput) * Double.parseDouble(hoursInput);
+        double netPay = grossPay - absencesDeduction - tardinessDeduction - undertimeDeduction;
+
+        System.out.println("Gross Pay: " + grossPay);
+        employeeToUpdate.grossPay = grossPay;
+
+        System.out.println("Net Pay: " + netPay);
+        employeeToUpdate.netPay = netPay;
+
+        System.out.println("Employee details updated successfully.");
+      } else {
+        System.out.println("Employee with ID " + idToUpdate + " not found.");
+      }
     }
 
     public void deleteEmployee() {
@@ -279,12 +347,18 @@ public class GroupThree_ProblemThree {
       input.nextLine();
     }
 
-    public static double convertTimeToHour(int hours, int minutes, int seconds){
+    public static double convertTimeToHour(String time){
+      String[] splitTime = time.split(":");
+
+      int hour = Integer.parseInt(splitTime[0]);
+      int minute = Integer.parseInt(splitTime[1]);
+      int second= Integer.parseInt(splitTime[2]);
+
       double HOUR_CONSTANT_FOR_MINUTES = 60;
       double HOUR_CONSTANT_FOR_SECONDS = 3600;
-      double convertedMinutes = minutes / HOUR_CONSTANT_FOR_MINUTES;
-      double convertedSeconds = seconds / HOUR_CONSTANT_FOR_SECONDS;
-      return hours + convertedMinutes + convertedSeconds;
+      double convertedMinutes = minute / HOUR_CONSTANT_FOR_MINUTES;
+      double convertedSeconds = second / HOUR_CONSTANT_FOR_SECONDS;
+      return hour + convertedMinutes + convertedSeconds;
     }
   }
 
