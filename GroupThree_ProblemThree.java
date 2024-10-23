@@ -4,18 +4,22 @@ import java.util.*;
 public class GroupThree_ProblemThree {
   public static class Employee{
     private String employeeName;
-    private double employeeID;
+    private int employeeID;
     private String employeeDepartment;
     private String employeeRank;
 
     private double monthlyHoursToRender;
     private double hourlyRate;
-    private String tardinessDeductionTime;
-    private String undertimeDeductionTime;
+    private String tardinessTime;
+    private String undertimeTime;
+    private int absencesCount;
 
-    private int absencesCountDeduction;
+    private double absencesCountDeduction;
     private double tardinessDeduction;
     private double undertimeDeduction;
+
+    private double grossPay;
+    private double netPay;
 
     public Employee(
             String employeeName,
@@ -24,129 +28,168 @@ public class GroupThree_ProblemThree {
             String employeeRank,
             double monthlyHoursToRender,
             double hourlyRate,
-            String tardinessDeductionTime,
-            String undertimeDeductionTime,
-            int absencesCountDeduction,
+            String tardinessTime,
+            String undertimeTime,
+            int absencesCount,
+            double absencesCountDeduction,
             double tardinessDeduction,
-            double undertimeDeduction){
+            double undertimeDeduction,
+            double grossPay,
+            double netPay){
       this.employeeName = employeeName;
       this.employeeID = employeeID;
       this.employeeDepartment = employeeDepartment;
       this.employeeRank = employeeRank;
       this.monthlyHoursToRender = monthlyHoursToRender;
       this.hourlyRate = hourlyRate;
-      this.tardinessDeductionTime = tardinessDeductionTime;
-      this.undertimeDeductionTime = undertimeDeductionTime;
+      this.tardinessTime = tardinessTime;
+      this.undertimeTime = undertimeTime;
+      this.absencesCount = absencesCount;
       this.absencesCountDeduction = absencesCountDeduction;
       this.tardinessDeduction = tardinessDeduction;
       this.undertimeDeduction = undertimeDeduction;
+      this.grossPay = grossPay;
+      this.netPay = netPay;
     }
-  
-  
-  // Format to display the employee
+
     @Override
     public String toString() {
-        return String.format("Employee Details:\n" +
-                        "  Name: %s\n" +
-                        "  Employee ID No. : %.0f\n" + // Added Employee ID on Display so it shouldn't be confusing when counting how many employees
-                        "  Department: %s\n" +
-                        "  Rank: %s\n" +
-                        "  Time: %.2fh\n" +  
-                        "  Tardiness Deduction Time: %s\n" +
-                        "  Undertime Deduction Time: %s\n" +
-                        "  Absences: %d\n",
-                employeeName, employeeID, employeeDepartment, employeeRank,
-                monthlyHoursToRender, 
-                tardinessDeductionTime, 
-                undertimeDeductionTime,
-                absencesCountDeduction);
-    
-        }
+      // %d for int
+      return String.format(
+              "Employee Details:\n  Name: %%s\n  Employee ID No.: %%d\n  Department: %%s\n  Rank: %%s\n  Monthly Hours to Render: %%.2f hours\n  Hourly Rate: P %%.2f\n  Tardiness Time: %%s\n  Undertime Time: %%s\n  Absences: %%d\n  Absences Deduction: P %%.2f\n  Tardiness Deduction: P %%.2f\n  Undertime Deduction: P %%.2f\n  Gross Pay: P %%.2f\n  Net Pay: P %%.2f\n".formatted(),
+              employeeName,
+              employeeID,
+              employeeDepartment,
+              employeeRank,
+              monthlyHoursToRender,
+              hourlyRate,
+              tardinessTime,
+              undertimeTime,
+              absencesCount,
+              absencesCountDeduction,
+              tardinessDeduction,
+              undertimeDeduction,
+              grossPay,
+              netPay
+      );
     }
+  }
 
   public static class PayrollSystem{
-        LinkedList<Employee> employees = new LinkedList<>();
-        private Scanner input = new Scanner(System.in);
-        private int EmployeeCount = 1; 
+    LinkedList<Employee> employees = new LinkedList<>();
+    private Scanner input = new Scanner(System.in);
+    private int EmployeeCount = 1;
 
-        public void createEmployee() {
-            System.out.print("Enter number of employees to create: ");
-            int numberOfEmployees = input.nextInt();
-            input.nextLine(); 
+    public void createEmployee() {
+      System.out.print("Enter number of employees to create: ");
+      int numberOfEmployees = input.nextInt();
 
-            for (int i = 0; i < numberOfEmployees; i++) {
-                System.out.println("---------- Employee " + EmployeeCount + " ----------");
-                System.out.print("Employee Name (Ln, Fn Mi): ");
-                String employeeName = input.nextLine();
-                System.out.print("Employee Department: ");
-                String employeeDepartment = input.nextLine();
-                System.out.print("Employee Rank: ");
-                String employeeRank = input.nextLine();
-                System.out.print("Hours to render in a month: ");
-                double monthlyHoursToRender = input.nextDouble();
-                System.out.print("Hourly rate: ");
-                double hourlyRate = input.nextDouble();
-                input.nextLine(); 
+      double absencesDeduction = 0;
+      double tardinessDeduction = 0;
+      double undertimeDeduction = 0;
+      double grossPay = 0;
+      double netPay = 0;
 
-                System.out.println("Please enter the tardiness or late duration in the format");
-                System.out.print("(HH:MM:SS): ");
-                String tardinessDeductionTime = input.nextLine();
-                
-                System.out.println("Please enter undertime duration in the format");
-                System.out.print("(HH:MM:SS): ");
-                String undertimeDeductionTime = input.nextLine();
-                
-                System.out.print("Please enter absences count: ");
-                int absencesCountDeduction = input.nextInt();
-                input.nextLine(); 
+      input.nextLine();
 
-            Employee employee = new Employee(
-                    employeeName,
-                    EmployeeCount++, 
-                    employeeDepartment,
-                    employeeRank,
-                    monthlyHoursToRender,
-                    hourlyRate,
-                    tardinessDeductionTime,
-                    undertimeDeductionTime,
-                    absencesCountDeduction,
-                    0.0, // Placeholder for tardinessDeduction
-                    0.0  // Placeholder for undertimeDeduction
-            );
+      for (int i = 0; i < numberOfEmployees; i++) {
+        System.out.println("---------- Employee " + EmployeeCount + " ----------");
+        System.out.print("Employee Name (Ln, Fn Mi): ");
+        String employeeName = input.nextLine();
+        System.out.print("Employee Department: ");
+        String employeeDepartment = input.nextLine();
+        System.out.print("Employee Rank: ");
+        String employeeRank = input.nextLine();
+        System.out.print("Hours to render in a month: ");
+        double monthlyHoursToRender = input.nextDouble();
+        System.out.print("Hourly rate: ");
+        double hourlyRate = input.nextDouble();
+        input.nextLine();
 
-                employees.add(employee);
-                System.out.println("Employee " + employeeName + " has been added.");
-                System.out.println("========== ========== ==========");
-            }
-        }
+        System.out.println("Please enter the tardiness or late duration in the format");
+        System.out.print("(HH:MM:SS): ");
+        String tardinessTime = input.nextLine();
 
-        public void displayEmployee() {
-            if (employees.isEmpty()) {
-                System.out.println("o===o===o===o===o===o===o===o===o===o");
-                System.out.println("      No employees to display.");
-                System.out.println("o===o===o===o===o===o===o===o===o===o");
-                return;
-            }
-            System.out.println("o===o===o===o===o===o===o===o===o===o");
-            System.out.println("          List of Employees:");
-            System.out.println("o===o===o===o===o===o===o===o===o===o");
-            for (Employee emp : employees) {
-                System.out.println(emp);
-            }
-            System.out.println("o===o===o===o===o===o===o===o===o===o");
-        }
+        System.out.println("Please enter undertime duration in the format");
+        System.out.print("(HH:MM:SS): ");
+        String undertimeTime = input.nextLine();
 
-        public void findEmployee() {
-            // Source code for finding an employee here
-        }
+        System.out.print("Please enter absences count: ");
+        int absencesCount = input.nextInt();
+        input.nextLine();
 
-        public void updateEmployee() {
-            // Source code for updating an employee here
-        }
+        String[] splitTardinessTime = tardinessTime.split(":");
+        String[] splitUnderTime = undertimeTime.split(":");
 
-        public void deleteEmployee() {
-            // Source code for deleting an employee here
-        }
+        int hourTardiness = Integer.parseInt(splitTardinessTime[0]);
+        int minutesTardiness = Integer.parseInt(splitTardinessTime[1]);
+        int secondsTardiness = Integer.parseInt(splitTardinessTime[2]);
+
+        int hourUnderTime = Integer.parseInt(splitUnderTime[0]);
+        int minuteUnderTime = Integer.parseInt(splitUnderTime[1]);
+        int secondsUnderTime = Integer.parseInt(splitUnderTime[2]);
+
+        double convertedTardinessTime = convertTimeToHour(hourTardiness, minutesTardiness, secondsTardiness);
+        double convertedUnderTimeDeduction = convertTimeToHour(hourUnderTime, minuteUnderTime, secondsUnderTime);
+
+        absencesDeduction = absencesCount * (hourlyRate * 8);
+        tardinessDeduction = convertedTardinessTime * hourlyRate;
+        undertimeDeduction = convertedUnderTimeDeduction * hourlyRate;
+
+        grossPay = monthlyHoursToRender * hourlyRate;
+        netPay = grossPay - absencesDeduction - tardinessDeduction - undertimeDeduction;
+
+        Employee employee = new Employee(
+                employeeName,
+                EmployeeCount++,
+                employeeDepartment,
+                employeeRank,
+                monthlyHoursToRender,
+                hourlyRate,
+                tardinessTime,
+                undertimeTime,
+                absencesCount,
+                absencesDeduction,
+                tardinessDeduction,
+                undertimeDeduction,
+                grossPay,
+                netPay
+        );
+
+        employees.add(employee);
+        System.out.println(convertedUnderTimeDeduction);
+        System.out.println("Employee " + employeeName + " has been added.");
+        System.out.println("========== ========== ==========");
+      }
+    }
+
+    public void displayEmployee() {
+      if (employees.isEmpty()) {
+        System.out.println("o===o===o===o===o===o===o===o===o===o");
+        System.out.println("      No employees to display.");
+        System.out.println("o===o===o===o===o===o===o===o===o===o");
+        return;
+      }
+      System.out.println("o===o===o===o===o===o===o===o===o===o");
+      System.out.println("          List of Employees:");
+      System.out.println("o===o===o===o===o===o===o===o===o===o");
+      for (Employee emp : employees) {
+        System.out.println(emp);
+      }
+      System.out.println("o===o===o===o===o===o===o===o===o===o");
+    }
+
+    public void findEmployee() {
+      // Source code for finding an employee here
+    }
+
+    public void updateEmployee() {
+      // Source code for updating an employee here
+    }
+
+    public void deleteEmployee() {
+      // Source code for deleting an employee here
+    }
 
     public void displayMenu(){
 
