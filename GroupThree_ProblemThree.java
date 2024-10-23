@@ -140,6 +140,16 @@ public class GroupThree_ProblemThree {
         grossPay = monthlyHoursToRender * hourlyRate;
         netPay = grossPay - absencesDeduction - tardinessDeduction - undertimeDeduction;
 
+        if (grossPay >= 70000){
+          employeeRank = "CEO";
+        } else if (grossPay >= 50000 && grossPay < 70000) {
+          employeeRank = "Manager";
+        } else if (grossPay >= 20000 && grossPay < 50000 ) {
+          employeeRank = "Supervisor";
+        } else if (grossPay >= 10000 && grossPay < 20000) {
+          employeeRank = "Rank and File";
+        }
+
         Employee employee = new Employee(
                 employeeName,
                 EmployeeCount++,
@@ -158,7 +168,6 @@ public class GroupThree_ProblemThree {
         );
 
         employees.add(employee);
-        System.out.println(convertedUnderTimeDeduction);
         System.out.println("Employee " + employeeName + " has been added.");
         System.out.println("========== ========== ==========");
       }
@@ -181,7 +190,21 @@ public class GroupThree_ProblemThree {
     }
 
     public void findEmployee() {
-      // Source code for finding an employee here
+      System.out.print("Enter the employee ID to search: ");
+      int idToSearch = input.nextInt();
+      input.nextLine();
+
+      Employee foundEmployee = employees.stream()
+              .filter(emp -> emp.employeeID == idToSearch)
+              .findFirst()
+              .orElse(null);
+
+      if (foundEmployee != null) {
+        System.out.println("Employee found:");
+        System.out.println(foundEmployee);
+      } else {
+        System.out.println("Employee with ID " + idToSearch + " not found.");
+      }
     }
 
     public void updateEmployee() {
@@ -189,7 +212,16 @@ public class GroupThree_ProblemThree {
     }
 
     public void deleteEmployee() {
-      // Source code for deleting an employee here
+      System.out.print("Enter the ID of the employee to delete: ");
+      int idToDelete = input.nextInt();
+      input.nextLine();
+
+      boolean found = employees.removeIf(emp -> emp.employeeID == idToDelete);
+      if (found) {
+        System.out.println("Employee with ID " + idToDelete + " has been deleted.");
+      } else {
+        System.out.println("Employee with ID " + idToDelete + " not found.");
+      }
     }
 
     public void displayMenu(){
