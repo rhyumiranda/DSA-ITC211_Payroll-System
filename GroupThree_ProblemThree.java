@@ -129,12 +129,14 @@ public class GroupThree_ProblemThree {
 
         if (grossPay >= 70000){
           employeeRank = "CEO";
-        } else if (grossPay >= 50000 && grossPay < 70000) {
+        } else if (grossPay >= 50000) {
           employeeRank = "Manager";
-        } else if (grossPay >= 20000 && grossPay < 50000 ) {
+        } else if (grossPay >= 20000) {
           employeeRank = "Supervisor";
-        } else if (grossPay >= 10000 && grossPay < 20000) {
+        } else if (grossPay >= 10000) {
           employeeRank = "Rank and File";
+        } else {
+          employeeRank = "Intern";
         }
 
         Employee employee = new Employee(
