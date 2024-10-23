@@ -94,6 +94,8 @@ public class GroupThree_ProblemThree {
       input.nextLine();
 
       for (int i = 0; i < numberOfEmployees; i++) {
+
+
         System.out.println("---------- Employee " + EmployeeCount + " ----------");
         System.out.print("Employee Name (Ln, Fn Mi): ");
         String employeeName = input.nextLine();
@@ -142,8 +144,6 @@ public class GroupThree_ProblemThree {
           employeeRank = "Supervisor";
         } else if (grossPay >= 10000) {
           employeeRank = "Rank and File";
-        } else {
-          employeeRank = "Intern";
         }
 
         Employee employee = new Employee(
