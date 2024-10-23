@@ -98,6 +98,7 @@ public class GroupThree_ProblemThree {
         String employeeName = input.nextLine();
         System.out.print("Employee Department: ");
         String employeeDepartment = input.nextLine();
+        System.out.println("Ranks (CEO), (Manager), (Supervisor), (Rank & File)");
         System.out.print("Employee Rank: ");
         String employeeRank = input.nextLine();
         System.out.print("Hours to render in a month: ");
