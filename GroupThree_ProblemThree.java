@@ -89,6 +89,7 @@ public class GroupThree_ProblemThree {
       double undertimeDeduction = 0;
       double grossPay = 0;
       double netPay = 0;
+      double withholdingTax = 0;
 
       input.nextLine();
 
@@ -129,14 +130,20 @@ public class GroupThree_ProblemThree {
         grossPay = monthlyHoursToRender * hourlyRate;
         netPay = grossPay - absencesDeduction - tardinessDeduction - undertimeDeduction;
 
+        withholdingTax = grossPay * 0.25;
+
+        netPay = netPay - withholdingTax;
+
         if (grossPay >= 70000){
           employeeRank = "CEO";
-        } else if (grossPay >= 50000 && grossPay < 70000) {
+        } else if (grossPay >= 50000) {
           employeeRank = "Manager";
-        } else if (grossPay >= 20000 && grossPay < 50000 ) {
+        } else if (grossPay >= 20000) {
           employeeRank = "Supervisor";
-        } else if (grossPay >= 10000 && grossPay < 20000) {
+        } else if (grossPay >= 10000) {
           employeeRank = "Rank and File";
+        } else {
+          employeeRank = "Intern";
         }
 
         Employee employee = new Employee(
@@ -265,7 +272,8 @@ public class GroupThree_ProblemThree {
         employeeToUpdate.undertimeDeduction = undertimeDeduction;
 
         double grossPay = Double.parseDouble(rateInput) * Double.parseDouble(hoursInput);
-        double netPay = grossPay - absencesDeduction - tardinessDeduction - undertimeDeduction;
+        double withholdingTax = grossPay * 0.25;
+        double netPay = grossPay - absencesDeduction - tardinessDeduction - undertimeDeduction - withholdingTax;
 
         System.out.println("Gross Pay: " + grossPay);
         employeeToUpdate.grossPay = grossPay;
@@ -292,11 +300,11 @@ public class GroupThree_ProblemThree {
       }
     }
 
-    public void displayMenu(){
+    public void displayMenu() {
 
       boolean isActive = false;
 
-      while(!isActive){
+      while(!isActive) {
         System.out.println("o===o===o Payroll System o===o===o");
         System.out.println("1. Create an Employee");
         System.out.println("2. Find an Employee");
@@ -367,3 +375,7 @@ public class GroupThree_ProblemThree {
     payrollSystem.displayMenu();
   }
 }
+
+
+
+
