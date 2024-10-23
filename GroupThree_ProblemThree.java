@@ -89,16 +89,21 @@ public class GroupThree_ProblemThree {
       double undertimeDeduction = 0;
       double grossPay = 0;
       double netPay = 0;
-      String employeeRank = "";
+      double withholdingTax = 0;
 
       input.nextLine();
 
       for (int i = 0; i < numberOfEmployees; i++) {
+
+
         System.out.println("---------- Employee " + EmployeeCount + " ----------");
         System.out.print("Employee Name (Ln, Fn Mi): ");
         String employeeName = input.nextLine();
         System.out.print("Employee Department: ");
         String employeeDepartment = input.nextLine();
+        System.out.println("Ranks (CEO), (Manager), (Supervisor), (Rank & File)");
+        System.out.print("Employee Rank: ");
+        String employeeRank = input.nextLine();
         System.out.print("Hours to render in a month: ");
         double monthlyHoursToRender = input.nextDouble();
         System.out.print("Hourly rate: ");
@@ -127,6 +132,10 @@ public class GroupThree_ProblemThree {
         grossPay = monthlyHoursToRender * hourlyRate;
         netPay = grossPay - absencesDeduction - tardinessDeduction - undertimeDeduction;
 
+        withholdingTax = grossPay * 0.25;
+
+        netPay = netPay - withholdingTax;
+
         if (grossPay >= 70000){
           employeeRank = "CEO";
         } else if (grossPay >= 50000) {
@@ -135,8 +144,6 @@ public class GroupThree_ProblemThree {
           employeeRank = "Supervisor";
         } else if (grossPay >= 10000) {
           employeeRank = "Rank and File";
-        } else {
-          employeeRank = "Intern";
         }
 
         Employee employee = new Employee(
@@ -265,7 +272,8 @@ public class GroupThree_ProblemThree {
         employeeToUpdate.undertimeDeduction = undertimeDeduction;
 
         double grossPay = Double.parseDouble(rateInput) * Double.parseDouble(hoursInput);
-        double netPay = grossPay - absencesDeduction - tardinessDeduction - undertimeDeduction;
+        double withholdingTax = grossPay * 0.25;
+        double netPay = grossPay - absencesDeduction - tardinessDeduction - undertimeDeduction - withholdingTax;
 
         System.out.println("Gross Pay: " + grossPay);
         employeeToUpdate.grossPay = grossPay;
@@ -292,11 +300,11 @@ public class GroupThree_ProblemThree {
       }
     }
 
-    public void displayMenu(){
+    public void displayMenu() {
 
       boolean isActive = false;
 
-      while(!isActive){
+      while(!isActive) {
         System.out.println("o===o===o Payroll System o===o===o");
         System.out.println("1. Create an Employee");
         System.out.println("2. Find an Employee");
@@ -367,3 +375,7 @@ public class GroupThree_ProblemThree {
     payrollSystem.displayMenu();
   }
 }
+
+
+
+
