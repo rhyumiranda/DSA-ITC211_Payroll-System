@@ -1,3 +1,4 @@
+
 import java.util.*;
 
 public class GroupThree_ProblemThree {
@@ -88,6 +89,7 @@ public class GroupThree_ProblemThree {
       double undertimeDeduction = 0;
       double grossPay = 0;
       double netPay = 0;
+      String employeeRank = "";
 
       input.nextLine();
 
@@ -97,8 +99,6 @@ public class GroupThree_ProblemThree {
         String employeeName = input.nextLine();
         System.out.print("Employee Department: ");
         String employeeDepartment = input.nextLine();
-        System.out.print("Employee Rank: ");
-        String employeeRank = input.nextLine();
         System.out.print("Hours to render in a month: ");
         double monthlyHoursToRender = input.nextDouble();
         System.out.print("Hourly rate: ");
@@ -138,6 +138,16 @@ public class GroupThree_ProblemThree {
         grossPay = monthlyHoursToRender * hourlyRate;
         netPay = grossPay - absencesDeduction - tardinessDeduction - undertimeDeduction;
 
+        if (grossPay >= 70000){
+          employeeRank = "CEO";
+        } else if (grossPay >= 50000 && grossPay < 70000) {
+          employeeRank = "Manager";
+        } else if (grossPay >= 20000 && grossPay < 50000 ) {
+          employeeRank = "Supervisor";
+        } else if (grossPay >= 10000 && grossPay < 20000) {
+          employeeRank = "Rank and File";
+        }
+
         Employee employee = new Employee(
                 employeeName,
                 EmployeeCount++,
@@ -156,7 +166,6 @@ public class GroupThree_ProblemThree {
         );
 
         employees.add(employee);
-        System.out.println(convertedUnderTimeDeduction);
         System.out.println("Employee " + employeeName + " has been added.");
         System.out.println("========== ========== ==========");
       }
