@@ -1,4 +1,3 @@
-
 import java.util.*;
 
 public class GroupThree_ProblemThree {
@@ -10,6 +9,9 @@ public class GroupThree_ProblemThree {
 
     private double monthlyHoursToRender;
     private double hourlyRate;
+    private double overtimeHours;
+    private double overtimeRate;
+
     private String tardinessTime;
     private String undertimeTime;
     private int absencesCount;
@@ -28,6 +30,8 @@ public class GroupThree_ProblemThree {
             String employeeRank,
             double monthlyHoursToRender,
             double hourlyRate,
+            double overtimeHours,
+            double overtimeRate,
             String tardinessTime,
             String undertimeTime,
             int absencesCount,
@@ -42,6 +46,8 @@ public class GroupThree_ProblemThree {
       this.employeeRank = employeeRank;
       this.monthlyHoursToRender = monthlyHoursToRender;
       this.hourlyRate = hourlyRate;
+      this.overtimeHours = overtimeHours;
+      this.overtimeRate = overtimeRate;
       this.tardinessTime = tardinessTime;
       this.undertimeTime = undertimeTime;
       this.absencesCount = absencesCount;
@@ -56,13 +62,15 @@ public class GroupThree_ProblemThree {
     public String toString() {
       // %d for int
       return String.format(
-              "Employee Details:\n  Name: %%s\n  Employee ID No.: %%d\n  Department: %%s\n  Rank: %%s\n  Monthly Hours to Render: %%.2f hours\n  Hourly Rate: P %%.2f\n  Tardiness Time: %%s\n  Undertime Time: %%s\n  Absences: %%d\n  Absences Deduction: P %%.2f\n  Tardiness Deduction: P %%.2f\n  Undertime Deduction: P %%.2f\n  Gross Pay: P %%.2f\n  Net Pay: P %%.2f\n".formatted(),
+              "Employee Details:\n  Name: %%s\n  Employee ID No.: %%d\n  Department: %%s\n  Rank: %%s\n  Monthly Hours to Render: %%.2f hours\n  Hourly Rate: P %%.2f\n  Tardiness Time: %%s\n  Undertime Time: %%s\n  Absences: %%d\n  Absences Deduction: P %%.2f\n  Tardiness Deduction: P %%.2f\n  Undertime Deduction: P %%.2f\n  Gross Pay: P %%.2f\n  Net Pay: P %%.2f\n",
               employeeName,
               employeeID,
               employeeDepartment,
               employeeRank,
               monthlyHoursToRender,
               hourlyRate,
+              overtimeHours,
+              overtimeRate,
               tardinessTime,
               undertimeTime,
               absencesCount,
@@ -108,14 +116,16 @@ public class GroupThree_ProblemThree {
         double monthlyHoursToRender = input.nextDouble();
         System.out.print("Hourly rate: ");
         double hourlyRate = input.nextDouble();
+        System.out.print("Overtime hours: ");
+        double overtimeHours = input.nextDouble();
+        System.out.print("Overtime rate: ");
+        double overtimeRate = input.nextDouble();
         input.nextLine();
 
-        System.out.println("Please enter the tardiness or late duration in the format");
-        System.out.print("(HH:MM:SS): ");
+        System.out.println("Please enter the tardiness or late duration in the format (HH:MM:SS): ");
         String tardinessTime = input.nextLine();
 
-        System.out.println("Please enter undertime duration in the format");
-        System.out.print("(HH:MM:SS): ");
+        System.out.println("Please enter undertime duration in the format (HH:MM:SS): ");
         String undertimeTime = input.nextLine();
 
         System.out.print("Please enter absences count: ");
@@ -129,11 +139,10 @@ public class GroupThree_ProblemThree {
         tardinessDeduction = convertedTardinessTime * hourlyRate;
         undertimeDeduction = convertedUnderTimeDeduction * hourlyRate;
 
-        grossPay = monthlyHoursToRender * hourlyRate;
+        grossPay = (monthlyHoursToRender * hourlyRate) + (overtimeHours * overtimeRate);
         netPay = grossPay - absencesDeduction - tardinessDeduction - undertimeDeduction;
 
         withholdingTax = grossPay * 0.25;
-
         netPay = netPay - withholdingTax;
 
         if (grossPay >= 70000){
@@ -153,6 +162,8 @@ public class GroupThree_ProblemThree {
                 employeeRank,
                 monthlyHoursToRender,
                 hourlyRate,
+                overtimeHours,
+                overtimeRate,
                 tardinessTime,
                 undertimeTime,
                 absencesCount,
@@ -255,6 +266,18 @@ public class GroupThree_ProblemThree {
         if (!absencesInput.isBlank())
           employeeToUpdate.absencesCount = Integer.parseInt(absencesInput);
 
+        System.out.print("New Overtime Hours (Current: " 
+                + employeeToUpdate.overtimeHours + "): ");
+        String overtimeInput = input.nextLine();
+        if (!overtimeInput.isBlank())
+            employeeToUpdate.overtimeHours = Double.parseDouble(overtimeInput);
+
+        System.out.print("New Overtime Rate (Current: " 
+                + employeeToUpdate.overtimeRate + "): ");
+        String overtimeRateInput = input.nextLine();
+        if (!overtimeRateInput.isBlank())
+              employeeToUpdate.overtimeRate = Double.parseDouble(overtimeRateInput);
+
         double convertedTardinessTime = convertTimeToHour(newTardinessTime);
         double convertedUndertimeTime = convertTimeToHour(newUndertimeTime);
 
@@ -273,7 +296,7 @@ public class GroupThree_ProblemThree {
 
         double grossPay = Double.parseDouble(rateInput) * Double.parseDouble(hoursInput);
         double withholdingTax = grossPay * 0.25;
-        double netPay = grossPay - absencesDeduction - tardinessDeduction - undertimeDeduction - withholdingTax;
+        double netPay = grossPay - withholdingTax - absencesDeduction - tardinessDeduction - undertimeDeduction;
 
         System.out.println("Gross Pay: " + grossPay);
         employeeToUpdate.grossPay = grossPay;
@@ -375,7 +398,3 @@ public class GroupThree_ProblemThree {
     payrollSystem.displayMenu();
   }
 }
-
-
-
-
